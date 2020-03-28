@@ -1,31 +1,32 @@
 {
-  "name": "sat-backend",
-  "version": "1.0.0",
-  "description": "Backend do Sistema de Atendimentos",
-  "main": "src/server.js",
-  "repository": "https://github.com/richardmadureira/sat.git",
-  "author": "Richard Mendes Madureira",
-  "license": "MIT",
-  "private": false,
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development cross-env DEBUG=knex:query nodemon src/server.js",
-    "start": "cross-env NODE_ENV=development node src/server.js",
-    "test": "cross-env NODE_ENV=test jest"
-  },
-  "dependencies": {
-    "celebrate": "^12.0.1",
-    "cors": "^2.8.5",
-    "cross-env": "^7.0.2",
-    "express": "^4.17.1",
-    "helmet": "^3.22.0",
-    "knex": "^0.20.13",
-    "sqlite3": "^4.1.1",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "jest": "^25.2.3",
-    "nodemon": "^2.0.2",
-    "supertest": "^4.0.2"
-  }
+	"name": "sat-backend",
+	"version": "1.0.0",
+	"description": "Backend do Sistema de Atendimentos",
+	"main": "src/server.js",
+	"repository": "https://github.com/richardmadureira/sat.git",
+	"author": "Richard Mendes Madureira",
+	"license": "MIT",
+	"private": false,
+	"scripts": {
+		"dev": "cross-env NODE_ENV=development cross-env DEBUG=knex:query nodemon src/server.js",
+		"start": "cross-env NODE_ENV=development node src/server.js",
+		"test": "cross-env NODE_ENV=test jest"
+	},
+	"dependencies": {
+		"celebrate": "^12.0.1",
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.2",
+		"express": "^4.17.1",
+		"helmet": "^3.22.0",
+		"knex": "^0.20.13",
+		"sqlite3": "^4.1.1",
+		"winston": "^3.2.1"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"jest": "^25.2.3",
+		"nodemon": "^2.0.2",
+		"prettier": "^2.0.2",
+		"supertest": "^4.0.2"
+	}
 }

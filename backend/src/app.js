@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const routes = require('./routes');
 const { errors } = require('celebrate');
+const routes = require('./routes');
 
 const app = express();
 app.disable('x-powered-by');
