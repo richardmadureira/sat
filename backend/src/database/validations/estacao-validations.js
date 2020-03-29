@@ -12,8 +12,8 @@ function validateCreate() {
 function validateUpdate() {
   return celebrate({
     [Segments.BODY]: Joi.object().keys({
-      tipoEstacao: Joi.string().required(),
-      numero: Joi.number().integer().positive().required()
+      tipoEstacao: Joi.string(),
+      numero: Joi.number().integer().positive()
     }),
     [Segments.PARAMS]: Joi.object().keys({
       id: Joi.number().integer().positive().required()

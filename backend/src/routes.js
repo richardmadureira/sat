@@ -6,7 +6,7 @@ const {
   validateDelete,
   validateFindById,
   validateFindAll
-} = require('./database/validation/estacao-validations');
+} = require('./database/validations/estacao-validations');
 
 const routes = express.Router();
 

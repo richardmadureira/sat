@@ -17,9 +17,6 @@ module.exports = {
     const { id } = req.params;
     try {
       const result = await connection('estacoes').where('id', id).select('*').first();
-      console.log('**********************');
-      console.log(result);
-      console.log('**********************');
       if (result) {
         const { tipoEstacao, numero } = req.body;
         let data = {};

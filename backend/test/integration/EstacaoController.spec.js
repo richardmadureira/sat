@@ -51,27 +51,25 @@ describe('Estacoes', () => {
   });
 
   it('Deve cadastrar nova estação', async () => {
-    const estacao = { tipoEstacao: 'GUICHE', numero: 24 };
-    const response = await request(app).post('/estacoes').send(estacao);
+    const tipoEstacao = 'GUICHE';
+    const numero = 24;
+    const response = await request(app).post('/estacoes').send({ tipoEstacao, numero });
     expect(response.body).toHaveProperty('id');
     expect(response.body).toHaveProperty('tipoEstacao');
     expect(response.body).toHaveProperty('numero');
     expect(response.body.id).toEqual(4);
-    expect(response.body.tipoEstacao).toBe('GUICHE');
-    expect(response.body.numero).toBe(24);
+    expect(response.body.tipoEstacao).toBe(tipoEstacao);
+    expect(response.body.numero).toBe(numero);
   });
 
   it('Deve atualizar estacao existente', async () => {
     const id = 1;
-    const estacao = { numero: 111 };
-    const response = await request(app).put(`/estacoes${id}`).send(estacao);
-    console.log(response.body);
-    // expect(response.body).toHaveProperty('id');
-    // expect(response.body).toHaveProperty('tipoEstacao');
-    // expect(response.body).toHaveProperty('numero');
-    // expect(response.body.id).toEqual(4);
-    // expect(response.body.tipoEstacao).toBe('GUICHE');
-    // expect(response.body.numero).toBe(111);
+    const numero = 111;
+    const response = await request(app).put(`/estacoes/${id}`).send({ numero });
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('numero');
+    expect(response.body.id).toEqual(id);
+    expect(response.body.numero).toBe(numero);
   });
 
   it('Deve dar erro de validação "tipoEstacao" não informado', async () => {
