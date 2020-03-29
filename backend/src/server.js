@@ -1,3 +1,5 @@
+const config = require('./config');
 const app = require('./app');
+const logger = require('./config/logger');
 
-app.listen(3333, () => console.log('Servidor inicializado!'));
+app.listen(config.restPort, () => logger.info(`Backend iniciado na porta ${config.restPort}`));

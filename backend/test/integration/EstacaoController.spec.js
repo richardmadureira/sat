@@ -27,6 +27,15 @@ describe('Estacoes', () => {
     expect(response.body).toEqual(expect.arrayContaining(arrayEsperado));
   });
 
+  it('Deve listar Todas as estações to tipo MESA', async () => {
+    const response = await request(app).get('/estacoes').send({ tipoEstacao: 'MESA' });
+    const arrayEsperado = [{ id: 1, tipoEstacao: 'MESA', numero: 1 }];
+    expect(response.header['x-total-count']).toBe('1');
+    expect(response.header['x-page-number']).toBe('1');
+    expect(response.header['x-page-size']).toBe('5');
+    expect(response.body).toEqual(expect.arrayContaining(arrayEsperado));
+  });
+
   it('Deve listar 2 primeiras estacoes', async () => {
     const response = await request(app).get('/estacoes?page=1&size=2');
     const arrayEsperado = [

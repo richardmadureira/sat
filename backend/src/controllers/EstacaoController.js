@@ -1,7 +1,9 @@
 const connection = require('../database/connection');
+const logger = require('../config/logger');
 
 module.exports = {
   async create(req, res) {
+    logger.debug('Iniciando criação de nova estação');
     const { tipoEstacao, numero } = req.body;
     try {
       const [id] = await connection('estacoes').insert({
@@ -10,11 +12,13 @@ module.exports = {
       });
       return res.json({ id, tipoEstacao, numero });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      logger.error(`Erro ao criar nova estação: ${error.message}`);
+      return res.status(500).json({ message: error.message });
     }
   },
   async update(req, res) {
     const { id } = req.params;
+    logger.debug(`Iniciando atualização de estação de id ${id}`);
     try {
       const result = await connection('estacoes').where('id', id).select('*').first();
       if (result) {
@@ -30,29 +34,35 @@ module.exports = {
         return res.json({ id, ...data });
       }
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      logger.error(`Erro ao atualizar estação de id: ${id}. ${error.message}`);
+      return res.status(500).json({ message: error.message });
     }
   },
   async delete(req, res) {
     const { id } = req.params;
+    logger.debug(`Iniciando exclusão de estação de id ${id}`);
     try {
       await connection('estacoes').where('id', id).delete();
       return res.status(204).send();
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      logger.error(`Erro ao excluir estação de id ${id}. ${error.message}`);
+      return res.status(500).json({ message: error.message });
     }
   },
   async findById(req, res) {
     const { id } = req.params;
+    logger.debug(`Pesquisando estação pelo id ${id}`);
     try {
       const result = await connection('estacoes').where('id', id).select('*').first();
       return res.json(result);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      logger.error(`Erro ao pesquisar estação de id ${id}. ${error.message}`);
+      return res.status(500).json({ message: error.message });
     }
   },
   async findAll(req, res) {
     const { page = 1, size = 5 } = req.query;
+    logger.debug('Iniciando pesquisa paginada de estações');
     try {
       const { tipoEstacao, numero } = req.body;
       const { whereRaw, args } = getClauseWhere(tipoEstacao, numero);
@@ -68,7 +78,8 @@ module.exports = {
         .header('X-Page-Size', size)
         .json(estacoes);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      logger.error(`Erro ao realizar pesquisa paginada de estações. ${error.message}`);
+      return res.status(500).json({ message: error.message });
     }
   }
 };
