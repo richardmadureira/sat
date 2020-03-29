@@ -1,6 +1,6 @@
 const { celebrate, Segments, Joi } = require('celebrate');
 
-function validateCreateEstacao() {
+function validateCreate() {
   return celebrate({
     [Segments.BODY]: Joi.object().keys({
       tipoEstacao: Joi.string().required(),
@@ -9,7 +9,7 @@ function validateCreateEstacao() {
   });
 }
 
-function validateUpdateEstacao() {
+function validateUpdate() {
   return celebrate({
     [Segments.BODY]: Joi.object().keys({
       tipoEstacao: Joi.string().required(),
@@ -21,7 +21,7 @@ function validateUpdateEstacao() {
   });
 }
 
-function validateDeleteEstacao() {
+function validateDelete() {
   return celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       id: Joi.number().integer().positive().required()
@@ -29,8 +29,31 @@ function validateDeleteEstacao() {
   });
 }
 
+function validateFindById() {
+  return celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      id: Joi.number().integer().positive().required()
+    })
+  });
+}
+
+function validateFindAll() {
+  return celebrate({
+    [Segments.QUERY]: {
+      page: Joi.number().integer().positive().min(1),
+      size: Joi.number().integer().positive().min(1)
+    },
+    [Segments.BODY]: Joi.object().keys({
+      tipoEstacao: Joi.string(),
+      numero: Joi.number().integer().positive()
+    })
+  });
+}
+
 module.exports = {
-  validateCreateEstacao,
-  validateUpdateEstacao,
-  validateDeleteEstacao
+  validateCreate,
+  validateUpdate,
+  validateDelete,
+  validateFindById,
+  validateFindAll
 };
