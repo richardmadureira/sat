@@ -11,7 +11,7 @@
     "dev": "cross-env NODE_ENV=development cross-env DEBUG=knex:query nodemon src/server.js",
     "start": "cross-env NODE_ENV=development node src/server.js",
     "lint": "eslint .",
-    "lint-fix": "yarn prettier:format && yarnlint -- --fix",
+    "lint-fix": "yarn prettier:format && yarn lint --fix",
     "test": "cross-env NODE_ENV=test jest",
     "prettier:format": "prettier --write \"{,**/}*.{js,json,md,yml,java}\""
   },
