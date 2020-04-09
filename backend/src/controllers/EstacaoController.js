@@ -69,11 +69,10 @@ module.exports = {
         .select('*')
         .offset((page - 1) * size)
         .limit(size);
-      res
-        .header('X-Total-Count', responseCount[0].count)
-        .header('X-Page-Number', page)
-        .header('X-Page-Size', size)
-        .json(estacoes);
+      res.header('X-Total-Count', responseCount[0].count);
+      res.header('X-Page-Number', page);
+      res.header('X-Page-Size', size);
+      return res.json(estacoes);
     } catch (error) {
       logger.error(`Erro ao realizar pesquisa paginada de estações. ${error.message}`);
       return res.status(500).json({ message: error.message });
