@@ -6,11 +6,8 @@ module.exports = {
     logger.debug('Iniciando criação de nova estação');
     const { tipoEstacao, numero } = req.body;
     try {
-      const [id] = await connection('estacoes').insert({
-        tipoEstacao,
-        numero
-      });
-      return res.json({ id, tipoEstacao, numero });
+      const response = await connection('estacoes').insert({ tipoEstacao, numero }).returning('*');
+      return res.json(response[0]);
     } catch (error) {
       logger.error(`Erro ao criar nova estação: ${error.message}`);
       return res.status(500).json({ message: error.message });
@@ -66,14 +63,14 @@ module.exports = {
     try {
       const { tipoEstacao, numero } = req.body;
       const { whereRaw, args } = getClauseWhere(tipoEstacao, numero);
-      const [count] = await connection('estacoes').whereRaw(whereRaw, args).count('*');
+      const responseCount = await connection('estacoes').whereRaw(whereRaw, args).count('*');
       const estacoes = await connection('estacoes')
         .whereRaw(whereRaw, args)
         .select('*')
         .offset((page - 1) * size)
         .limit(size);
       res
-        .header('X-Total-Count', count['count(*)'])
+        .header('X-Total-Count', responseCount[0].count)
         .header('X-Page-Number', page)
         .header('X-Page-Size', size)
         .json(estacoes);
@@ -90,7 +87,7 @@ function getClauseWhere(tipoEstacao, numero) {
   let isClause = false;
   if (tipoEstacao) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
-    whereRaw = whereRaw.concat('tipoEstacao like ?');
+    whereRaw = whereRaw.concat('"tipoEstacao" ilike ?');
     args[args.length] = '%' + tipoEstacao.trim() + '%';
     isClause = true;
   }

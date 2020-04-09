@@ -2,9 +2,13 @@
 
 module.exports = {
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: './src/database/dev-db.sqlite3'
+      host: 'localhost',
+      port: 5432,
+      database: 'sat-db',
+      user: 'sat',
+      password: 'sat00'
     },
     migrations: {
       directory: './src/database/migrations'
@@ -16,9 +20,14 @@ module.exports = {
   },
 
   test: {
-    client: 'sqlite3',
+    debug: false,
+    client: 'postgresql',
     connection: {
-      filename: './src/database/test-db.sqlite3'
+      host: 'localhost',
+      port: 5432,
+      database: 'sat-test-db',
+      user: 'sat',
+      password: 'sat00'
     },
     migrations: {
       directory: './src/database/migrations'
