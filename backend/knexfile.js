@@ -30,10 +30,10 @@ module.exports = {
       password: 'sat00'
     },
     migrations: {
-      directory: './src/database/migrations'
+      directory: './test/database/migrations'
     },
     seeds: {
-      directory: './src/database/seeds'
+      directory: './test/database/seeds'
     },
     useNullAsDefault: true
   },

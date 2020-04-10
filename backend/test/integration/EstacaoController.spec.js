@@ -4,10 +4,15 @@ const app = require('../../src/app');
 const connection = require('../../src/database/connection');
 
 describe('Estacoes', () => {
+
   beforeEach(async () => {
     await connection.migrate.rollback();
     await connection.migrate.latest();
     await connection.seed.run();
+  });
+
+  afterEach(async () => {
+    await connection.raw('delete from estacoes');
   });
 
   afterAll(async () => {

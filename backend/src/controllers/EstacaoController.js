@@ -21,14 +21,14 @@ module.exports = {
       if (result) {
         const { tipoEstacao, numero } = req.body;
         let data = {};
-        if (result.tipoEstacao !== tipoEstacao) {
+        if (tipoEstacao && result.tipoEstacao !== tipoEstacao) {
           data.tipoEstacao = tipoEstacao;
         }
-        if (result.numero !== numero) {
+        if (numero && result.numero !== numero) {
           data.numero = numero;
         }
-        await connection('estacoes').where('id', id).update(data);
-        return res.json({ id, ...data });
+        const response = await connection('estacoes').where('id', id).update(data).returning('*');
+        return res.json(response[0]);
       }
     } catch (error) {
       logger.error(`Erro ao atualizar estação de id: ${id}. ${error.message}`);
@@ -63,7 +63,7 @@ module.exports = {
     try {
       const { tipoEstacao, numero } = req.body;
       const { whereRaw, args } = getClauseWhere(tipoEstacao, numero);
-      const responseCount = await connection('estacoes').whereRaw(whereRaw, args).count('*');
+      const responseCount = await connection('estacoes').whereRaw(whereRaw, args).count('id');
       const estacoes = await connection('estacoes')
         .whereRaw(whereRaw, args)
         .select('*')
