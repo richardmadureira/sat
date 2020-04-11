@@ -1,8 +1,10 @@
 const express = require('express');
 const EstacaoController = require('./controllers/EstacaoController');
 const GrupoServicoController = require('./controllers/GrupoServicoController');
+const ServicoController = require('./controllers/ServicoController');
 const estacaoValidation = require('./database/validations/estacao-validations');
 const grupoServicoValidation = require('./database/validations/grupo-servico-validations');
+const servicoValidation = require('./database/validations/servico-validations');
 
 const routes = express.Router();
 
@@ -18,5 +20,11 @@ routes.put('/grupos-servicos/:id', grupoServicoValidation.validateUpdate(), Grup
 routes.delete('/grupos-servicos/:id', grupoServicoValidation.validateDelete(), GrupoServicoController.delete);
 routes.get('/grupos-servicos/:id', grupoServicoValidation.validateFindById(), GrupoServicoController.findById);
 routes.get('/grupos-servicos', grupoServicoValidation.validateFindAll(), GrupoServicoController.findAll);
+// Serviços
+routes.post('/grupos-servicos/:idGrupoServico', servicoValidation.validateCreate(), ServicoController.create);
+routes.put('/servicos/:id', servicoValidation.validateUpdate(), ServicoController.update);
+routes.delete('/servicos/:id', servicoValidation.validateDelete(), ServicoController.delete);
+routes.get('/servicos/:id', servicoValidation.validateFindById(), ServicoController.findById);
+routes.get('/servicos', servicoValidation.validateFindAll(), ServicoController.findAll);
 
 module.exports = routes;
