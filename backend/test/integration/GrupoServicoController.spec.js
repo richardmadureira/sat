@@ -4,7 +4,6 @@ const app = require('../../src/app');
 const connection = require('../../src/database/connection');
 
 describe('Grupos de Serviços', () => {
-
   beforeEach(async () => {
     await connection.migrate.rollback();
     await connection.migrate.latest();

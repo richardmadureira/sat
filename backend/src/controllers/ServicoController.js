@@ -4,10 +4,12 @@ const logger = require('../config/logger');
 module.exports = {
   async create(req, res) {
     logger.debug('Iniciando criação de novo serviço');
-    const {idGrupoServico} = req.params;
+    const { idGrupoServico } = req.params;
     const { nome, sigla, descricao, ativo } = req.body;
     try {
-      const response = await connection('servicos').insert({ id_grupo_servico: idGrupoServico, nome, sigla, descricao, ativo }).returning('*');
+      const response = await connection('servicos')
+        .insert({ id_grupo_servico: idGrupoServico, nome, sigla, descricao, ativo })
+        .returning('*');
       return res.json(response[0]);
     } catch (error) {
       logger.error(`Erro ao criar novo serviço: ${error.message}`);
@@ -22,7 +24,7 @@ module.exports = {
       if (result) {
         const { nome, sigla, descricao, ativo, idGrupoServico } = req.body;
         let data = {};
-        if(idGrupoServico && result.id_grupo_servico !== idGrupoServico){
+        if (idGrupoServico && result.id_grupo_servico !== idGrupoServico) {
           data.id_grupo_servico = idGrupoServico;
         }
         if (nome && result.nome !== nome) {

@@ -5,9 +5,7 @@ exports.up = knex => {
     table.string('sigla').notNullable();
     table.string('descricao').notNullable();
     table.boolean('ativo').notNullable();
-    table.integer('id_grupo_servico').unsigned().notNullable();
-    table.foreign('id_grupo_servico').references('id').inTable('grupos_servicos');
-    table.index(['id_grupo_servico'], 'idx_fk_grupo_servico');
+    table.integer('id_grupo_servico').unsigned().notNullable().references('id').inTable('servicos').onDelete('CASCADE').index();
   });
 };
 
