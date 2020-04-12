@@ -9,12 +9,12 @@ module.exports = {
 
     try {
       const response = await connection('paineis').insert({ nome, descricao, mensagem, ativo }).returning('*');
-      if(listaIdsServicos && Array.isArray(listaIdsServicos)){
-        for(let idServico of listaIdsServicos){
-          servicos.push({id_painel: response[0].id, id_servico: idServico});
+      if (listaIdsServicos && Array.isArray(listaIdsServicos)) {
+        for (let idServico of listaIdsServicos) {
+          servicos.push({ id_painel: response[0].id, id_servico: idServico });
         }
       }
-      const responseServicos = await connection('paineis_servicos').insert(servicos).returning("id_servico");
+      const responseServicos = await connection('paineis_servicos').insert(servicos).returning('id_servico');
       let retorno = response[0];
       retorno.listaIdsServicos = responseServicos;
       return res.json(retorno);
@@ -45,22 +45,22 @@ module.exports = {
           data.mensagem = mensagem;
           retorno.mensagem = mensagem;
         }
-        if(ativo != undefined && result.ativo !== ativo){
+        if (ativo != undefined && result.ativo !== ativo) {
           data.ativo = ativo;
           retorno.ativo = ativo;
         }
-        if(listaIdsServicos && Array.isArray(listaIdsServicos)){
-          for(let idServico of listaIdsServicos){
-            servicos.push({id_painel: id, id_servico: idServico});
+        if (listaIdsServicos && Array.isArray(listaIdsServicos)) {
+          for (let idServico of listaIdsServicos) {
+            servicos.push({ id_painel: id, id_servico: idServico });
           }
         }
-        if(Object.keys(data).length>0){
+        if (Object.keys(data).length > 0) {
           const response = await connection('paineis').where('id', id).update(data).returning('*');
           retorno = response[0];
         }
-        if(servicos.length>0){
+        if (servicos.length > 0) {
           await connection('paineis_servicos').where('id_painel', id).delete();
-          const responseServicos = await connection('paineis_servicos').insert(servicos).returning("id_servico");
+          const responseServicos = await connection('paineis_servicos').insert(servicos).returning('id_servico');
           retorno.listaIdsServicos = responseServicos;
         }
         return res.json(retorno);

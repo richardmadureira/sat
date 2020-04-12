@@ -40,7 +40,7 @@ describe('Painéis', () => {
     const response = await request(app).get('/paineis?page=1&size=2');
     const arrayEsperado = [
       { id: 1, nome: 'Painel 1', descricao: 'Descrição do painel 1', mensagem: 'Mensagem do painel 1', ativo: true },
-      { id: 2, nome: 'Painel 2', descricao: 'Descrição do painel 2', mensagem: 'Mensagem do painel 2', ativo: true },
+      { id: 2, nome: 'Painel 2', descricao: 'Descrição do painel 2', mensagem: 'Mensagem do painel 2', ativo: true }
     ];
     expect(response.body).toEqual(expect.arrayContaining(arrayEsperado));
     expect(response.header['x-total-count']).toEqual('3');
@@ -65,10 +65,10 @@ describe('Painéis', () => {
 
   it('Deve cadastrar novo painel', async () => {
     const nome = 'Nome do Painel';
-    const descricao = "Descrição do painel";
-    const mensagem = "Mensagem do painel";
+    const descricao = 'Descrição do painel';
+    const mensagem = 'Mensagem do painel';
     const ativo = true;
-    const listaIdsServicos = [ 1, 2, 3, 4, 5, 6];
+    const listaIdsServicos = [1, 2, 3, 4, 5, 6];
 
     const response = await request(app).post('/paineis').send({ nome, descricao, mensagem, ativo, listaIdsServicos });
     expect(response.body).toHaveProperty('id');
@@ -95,9 +95,9 @@ describe('Painéis', () => {
     expect(response.body).toHaveProperty('ativo');
     expect(response.body).toHaveProperty('listaIdsServicos');
     expect(response.body.id).toEqual(id);
-    expect(response.body.nome).toBe("Painel 1");
-    expect(response.body.descricao).toBe("Descrição do painel 1");
-    expect(response.body.mensagem).toBe("Mensagem do painel 1");
+    expect(response.body.nome).toBe('Painel 1');
+    expect(response.body.descricao).toBe('Descrição do painel 1');
+    expect(response.body.mensagem).toBe('Mensagem do painel 1');
     expect(response.body.ativo).toBe(ativo);
     expect(response.body.listaIdsServicos).toEqual(expect.arrayContaining(listaIdsServicos));
   });
