@@ -42,6 +42,10 @@ module.exports = {
       await connection('estacoes').where('id', id).delete();
       return res.status(204).send();
     } catch (error) {
+      if (error.detail) {
+        logger.error(`Erro ao excluir serviço de id ${id}. ${error.detail}`);
+        return res.status(400).json({ message: error.detail });
+      }
       logger.error(`Erro ao excluir estação de id ${id}. ${error.message}`);
       return res.status(500).json({ message: error.message });
     }

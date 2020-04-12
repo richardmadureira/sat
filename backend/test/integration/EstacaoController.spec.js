@@ -10,10 +10,6 @@ describe('Estacoes', () => {
     await connection.seed.run();
   });
 
-  afterEach(async () => {
-    await connection.raw('delete from estacoes');
-  });
-
   afterAll(async () => {
     await connection.destroy();
   });

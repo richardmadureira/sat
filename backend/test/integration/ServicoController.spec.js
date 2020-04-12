@@ -10,10 +10,6 @@ describe('Serviços', () => {
     await connection.seed.run();
   });
 
-  afterEach(async () => {
-    await connection.raw('delete from servicos');
-  });
-
   afterAll(async () => {
     await connection.destroy();
   });
@@ -201,8 +197,15 @@ describe('Serviços', () => {
     expect(response.body.message).toBe('"ativo" is required');
   });
 
-  it('Deve excluir serviço', async () => {
+  it('Deve lancar exceção para serviço ainda sendo referenciado em outra tabela', async () => {
     const id = 1;
+    const response = await request(app).delete(`/servicos/${id}`);
+    expect(response.status).toEqual(400);
+    expect(response.body.message).toBe('Key (id)=(1) is still referenced from table "paineis_servicos".');
+  });
+
+  it('Deve excluir serviço não utilizado', async () => {
+    const id = 6;
     const response = await request(app).delete(`/servicos/${id}`);
     expect(response.status).toEqual(204);
   });

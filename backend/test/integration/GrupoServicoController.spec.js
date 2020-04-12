@@ -10,10 +10,6 @@ describe('Grupos de Serviços', () => {
     await connection.seed.run();
   });
 
-  afterEach(async () => {
-    await connection.raw('delete from grupos_servicos');
-  });
-
   afterAll(async () => {
     await connection.destroy();
   });
