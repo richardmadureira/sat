@@ -1,7 +1,7 @@
 exports.up = knex => {
   return knex.schema.createTable('atendentes', table => {
     table.increments().primary();
-    table.integer('cpf').notNullable();
+    table.bigInteger('cpf').notNullable();
     table.string('nome').notNullable();
     table.string('email').notNullable();
     table.string('sexo').notNullable();
