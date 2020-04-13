@@ -72,7 +72,10 @@ module.exports = {
     const { id } = req.params;
     logger.debug(`Pesquisando atendente pelo id ${id}`);
     try {
-      const result = await connection('atendentes').where('id', id).select(["id", connection.raw('cpf::int'), "nome", "email", "sexo", "data_nascimento as dataNascimento", "username", "foto"]).first();
+      const result = await connection('atendentes')
+        .where('id', id)
+        .select(['id', connection.raw('cpf::int'), 'nome', 'email', 'sexo', 'data_nascimento as dataNascimento', 'username', 'foto'])
+        .first();
       return res.json(result);
     } catch (error) {
       logger.error(`Erro ao pesquisar atendente de id ${id}. ${error.message}`);
@@ -88,7 +91,17 @@ module.exports = {
       const responseCount = await connection('atendentes').whereRaw(whereRaw, args).count('id');
       const atendentes = await connection('atendentes')
         .whereRaw(whereRaw, args)
-        .select(["id", connection.raw('cpf::int'), "nome", "email", "sexo", "data_nascimento as dataNascimento", "username", "password", "foto"])
+        .select([
+          'id',
+          connection.raw('cpf::int'),
+          'nome',
+          'email',
+          'sexo',
+          'data_nascimento as dataNascimento',
+          'username',
+          'password',
+          'foto'
+        ])
         .offset((page - 1) * size)
         .limit(size);
       res.header('X-Total-Count', responseCount[0].count);

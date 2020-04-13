@@ -16,7 +16,7 @@ const storageTypes = {
         cb(null, file.key);
       });
     }
-  }),
+  })
 };
 
 module.exports = {
