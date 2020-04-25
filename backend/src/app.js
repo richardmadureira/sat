@@ -8,7 +8,7 @@ const logErrors = require('./middlewares/logErrors');
 
 const app = express();
 
-app.use('/files', express.static(path.resolve(__dirname, '..', '..', 'tmp', 'uploads')));
+app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
 
 app.disable('x-powered-by');
 

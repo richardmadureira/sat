@@ -5,10 +5,11 @@ module.exports = {
   async create(req, res) {
     logger.debug('Iniciando criação de novo atendente');
     const { cpf, nome, email, sexo, dataNascimento, username, password } = req.body;
+    const { key } = req.file;
     try {
       const response = await connection('atendentes')
-        .insert({ cpf, nome, email, sexo, data_nascimento: dataNascimento, username, password, foto: 'http://localhost:3333/foto1.png' })
-        .returning('*');
+        .insert({ cpf, nome, email, sexo, data_nascimento: dataNascimento, username, password, foto: `http://localhost:3333/files/${key}` })
+        .returning(['cpf', 'nome', 'email', 'sexo', 'data_nascimento as dataNascimento', 'username', 'foto']);
       return res.json(response[0]);
     } catch (error) {
       logger.error(`Erro ao criar novo atendente: ${error.message}`);
