@@ -7,12 +7,14 @@ const GrupoServicoController = require('./controllers/GrupoServicoController');
 const ServicoController = require('./controllers/ServicoController');
 const PainelController = require('./controllers/PainelController');
 const AtendenteController = require('./controllers/AtendenteController');
+const PessoaController = require('./controllers/PessoaController');
 
 const estacaoValidation = require('./database/validations/estacao-validations');
 const grupoServicoValidation = require('./database/validations/grupo-servico-validations');
 const servicoValidation = require('./database/validations/servico-validations');
 const painelValidation = require('./database/validations/painel-validations');
 const atendenteValidation = require('./database/validations/atendente-validations');
+const pessoaValidation = require('./database/validations/pessoa-validations');
 
 const routes = express.Router();
 
@@ -47,5 +49,11 @@ routes.get('/atendentes', atendenteValidation.validateFindAll(), AtendenteContro
 routes.put('/atendentes/:id', atendenteValidation.validateUpdate(), multer(multerConfig).single('foto'), AtendenteController.update);
 routes.delete('/atendentes/:id', atendenteValidation.validateDelete(), AtendenteController.delete);
 routes.post('/atendentes/:id/servicos-habilitados', atendenteValidation.validateServicos(), AtendenteController.atualizarServicosHabilitados);
+// Pessoas
+routes.post('/pessoas', /*pessoaValidation.validateCreate(),*/ multer(multerConfig).single('foto'), PessoaController.create);
+routes.get('/pessoas/:id', pessoaValidation.validateFindById(), PessoaController.findById);
+routes.get('/pessoas', pessoaValidation.validateFindAll(), PessoaController.findAll);
+routes.put('/pessoas/:id', pessoaValidation.validateUpdate(), multer(multerConfig).single('foto'), PessoaController.update);
+routes.delete('/pessoas/:id', pessoaValidation.validateDelete(), PessoaController.delete);
 
 module.exports = routes;
