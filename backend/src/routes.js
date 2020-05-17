@@ -46,4 +46,6 @@ routes.get('/atendentes/:id', atendenteValidation.validateFindById(), AtendenteC
 routes.get('/atendentes', atendenteValidation.validateFindAll(), AtendenteController.findAll);
 routes.put('/atendentes/:id', atendenteValidation.validateUpdate(), multer(multerConfig).single('foto'), AtendenteController.update);
 routes.delete('/atendentes/:id', atendenteValidation.validateDelete(), AtendenteController.delete);
+routes.post('/atendentes/:id/servicos-habilitados', atendenteValidation.validateServicos(), AtendenteController.atualizarServicosHabilitados);
+
 module.exports = routes;

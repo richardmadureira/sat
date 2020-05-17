@@ -113,6 +113,23 @@ module.exports = {
       logger.error(`Erro ao realizar pesquisa paginada de atendentes. ${error.message}`);
       return res.status(500).json({ message: error.message });
     }
+  },
+
+  async atualizarServicosHabilitados(req, res) {
+    logger.debug("Iniciando atualização de serviços atendidos pelo atendente");
+    const { id: idAtendente } = req.params;
+    const servicosHabilitados = req.body;
+    const objTmp = servicosHabilitados.map(sh => ({id_servico: sh.idServico, id_atendente: idAtendente, em_execucao: sh.emExecucao}));
+    if(servicosHabilitados && Array.isArray(servicosHabilitados)){
+      try{
+        await connection('servicos_atendentes').where('id_atendente', idAtendente).delete();
+        const response = await connection('servicos_atendentes').insert(objTmp).returning('*');
+        return res.status(204).json({message: 'ok'});
+      } catch (error) {
+        logger.error(`Erro ao atualizar serviços atendidos pelo atendente. ${error.message}`);
+        return res.status(500).json({ message: error.message });
+      }
+    }
   }
 };
 
