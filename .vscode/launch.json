@@ -5,26 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "SAT Frontend",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend"
+    },
+    {
       "type": "node",
       "request": "launch",
-      "name": "Launch SAT",
+      "name": "SAT Backend",
       "program": "${workspaceFolder}/backend/src/server.js",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "knex:query"
       },
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "type": "node",
-      "name": "vscode-jest-tests",
-      "request": "launch",
-      "program": "${workspaceFolder}/backend/node_modules/jest/bin/jest",
-      "args": ["--runInBand"],
-      "cwd": "${workspaceFolder}/backend",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "disableOptimisticBPs": true
     }
   ]
 }
