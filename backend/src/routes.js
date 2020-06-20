@@ -15,6 +15,7 @@ const servicoValidation = require('./database/validations/servico-validations');
 const painelValidation = require('./database/validations/painel-validations');
 const atendenteValidation = require('./database/validations/atendente-validations');
 const pessoaValidation = require('./database/validations/pessoa-validations');
+const UserController = require('./controllers/UserController');
 
 const routes = express.Router();
 
@@ -55,5 +56,7 @@ routes.get('/pessoas/:id', pessoaValidation.validateFindById(), PessoaController
 routes.get('/pessoas', pessoaValidation.validateFindAll(), PessoaController.findAll);
 routes.put('/pessoas/:id', pessoaValidation.validateUpdate(), multer(multerConfig).single('foto'), PessoaController.update);
 routes.delete('/pessoas/:id', pessoaValidation.validateDelete(), PessoaController.delete);
+
+routes.post('/users', UserController.store);
 
 module.exports = routes;
