@@ -8,12 +8,12 @@ const routes = require('./routes');
 const logErrors = require('./middlewares/logErrors');
 
 const app = express();
-
+// app.use(function(req,res,next){setTimeout(next,1000)}); //para simular delay para ver o loading (apenas para testes)...
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
 app.disable('x-powered-by');
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({exposedHeaders: 'X-Total-Count'}));
 app.use(helmet());
 app.use(routes);
 app.use(errors());

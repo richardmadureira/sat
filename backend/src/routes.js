@@ -29,7 +29,7 @@ routes.post('/grupos-servicos', grupoServicoValidation.validateCreate(), GrupoSe
 routes.put('/grupos-servicos/:id', grupoServicoValidation.validateUpdate(), GrupoServicoController.update);
 routes.delete('/grupos-servicos/:id', grupoServicoValidation.validateDelete(), GrupoServicoController.delete);
 routes.get('/grupos-servicos/:id', grupoServicoValidation.validateFindById(), GrupoServicoController.findById);
-routes.get('/grupos-servicos', grupoServicoValidation.validateFindAll(), GrupoServicoController.findAll);
+routes.post('/grupos-servicos/pesquisa', grupoServicoValidation.validateFindAll(), GrupoServicoController.findAll);
 // Serviços
 routes.post('/grupos-servicos/:idGrupoServico', servicoValidation.validateCreate(), ServicoController.create);
 routes.put('/servicos/:id', servicoValidation.validateUpdate(), ServicoController.update);
