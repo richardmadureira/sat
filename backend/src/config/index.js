@@ -13,10 +13,10 @@ const defaultConfig = {
   jwtAlgorithm: 'RS256',
   jwtExpiresIn: 60 * 60,
 
-  //apenas para o aws
+  // apenas para o aws
   awsAccessKeyId: '',
   awsSecretAccessKey: '',
-  awsDefaultRegion: 'us-east-1'
+  awsDefaultRegion: 'us-east-1',
 };
 
 module.exports = rc('sat', defaultConfig);

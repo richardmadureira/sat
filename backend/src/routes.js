@@ -43,14 +43,14 @@ routes.delete('/paineis/:id', painelValidation.validateDelete(), PainelControlle
 routes.get('/paineis/:id', painelValidation.validateFindById(), PainelController.findById);
 routes.get('/paineis', painelValidation.validateFindAll(), PainelController.findAll);
 // Atendentes
-routes.post('/atendentes', /*atendenteValidation.validateCreate(),*/ multer(multerConfig).single('foto'), AtendenteController.create);
+routes.post('/atendentes', /* atendenteValidation.validateCreate(), */ multer(multerConfig).single('foto'), AtendenteController.create);
 routes.get('/atendentes/:id', atendenteValidation.validateFindById(), AtendenteController.findById);
 routes.get('/atendentes', atendenteValidation.validateFindAll(), AtendenteController.findAll);
 routes.put('/atendentes/:id', atendenteValidation.validateUpdate(), multer(multerConfig).single('foto'), AtendenteController.update);
 routes.delete('/atendentes/:id', atendenteValidation.validateDelete(), AtendenteController.delete);
 routes.post('/atendentes/:id/servicos-habilitados', atendenteValidation.validateServicos(), AtendenteController.atualizarServicosHabilitados);
 // Pessoas
-routes.post('/pessoas', /*pessoaValidation.validateCreate(),*/ multer(multerConfig).single('foto'), PessoaController.create);
+routes.post('/pessoas', /* pessoaValidation.validateCreate(), */ multer(multerConfig).single('foto'), PessoaController.create);
 routes.get('/pessoas/:id', pessoaValidation.validateFindById(), PessoaController.findById);
 routes.get('/pessoas', pessoaValidation.validateFindAll(), PessoaController.findAll);
 routes.put('/pessoas/:id', pessoaValidation.validateUpdate(), multer(multerConfig).single('foto'), PessoaController.update);

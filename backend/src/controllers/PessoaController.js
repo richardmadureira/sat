@@ -23,7 +23,7 @@ module.exports = {
       const result = await connection('pessoas').where('id', id).select('*').first();
       if (result) {
         const { cpf, nome, email, sexo, dataNascimento } = req.body;
-        let data = {};
+        const data = {};
         if (cpf && result.cpf !== cpf) {
           data.cpf = cpf;
         }
@@ -85,15 +85,7 @@ module.exports = {
       const responseCount = await connection('pessoas').whereRaw(whereRaw, args).count('id');
       const pessoas = await connection('pessoas')
         .whereRaw(whereRaw, args)
-        .select([
-          'id',
-          'cpf',
-          'nome',
-          'email',
-          'sexo',
-          'data_nascimento as dataNascimento',
-          'foto'
-        ])
+        .select(['id', 'cpf', 'nome', 'email', 'sexo', 'data_nascimento as dataNascimento', 'foto'])
         .offset((page - 1) * size)
         .limit(size);
       res.header('X-Total-Count', responseCount[0].count);
@@ -104,12 +96,12 @@ module.exports = {
       logger.error(`Erro ao realizar pesquisa paginada de pessoas. ${error.message}`);
       return res.status(500).json({ message: error.message });
     }
-  },
+  }
 };
 
 function getClauseWhere(cpf, nome, email, sexo, dataNascimento) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (cpf) {
     if (isClause) whereRaw = whereRaw.concat(' and ');

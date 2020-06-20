@@ -23,7 +23,7 @@ module.exports = {
       const result = await connection('atendentes').where('id', id).select('*').first();
       if (result) {
         const { cpf, nome, email, sexo, dataNascimento, username, password } = req.body;
-        let data = {};
+        const data = {};
         if (cpf && result.cpf !== cpf) {
           data.cpf = cpf;
         }
@@ -92,17 +92,7 @@ module.exports = {
       const responseCount = await connection('atendentes').whereRaw(whereRaw, args).count('id');
       const atendentes = await connection('atendentes')
         .whereRaw(whereRaw, args)
-        .select([
-          'id',
-          connection.raw('cpf::int'),
-          'nome',
-          'email',
-          'sexo',
-          'data_nascimento as dataNascimento',
-          'username',
-          'password',
-          'foto'
-        ])
+        .select(['id', connection.raw('cpf::int'), 'nome', 'email', 'sexo', 'data_nascimento as dataNascimento', 'username', 'password', 'foto'])
         .offset((page - 1) * size)
         .limit(size);
       res.header('X-Total-Count', responseCount[0].count);
@@ -116,15 +106,15 @@ module.exports = {
   },
 
   async atualizarServicosHabilitados(req, res) {
-    logger.debug("Iniciando atualização de serviços atendidos pelo atendente");
+    logger.debug('Iniciando atualização de serviços atendidos pelo atendente');
     const { id: idAtendente } = req.params;
     const servicosHabilitados = req.body;
-    const objTmp = servicosHabilitados.map(sh => ({id_servico: sh.idServico, id_atendente: idAtendente, em_execucao: sh.emExecucao}));
-    if(servicosHabilitados && Array.isArray(servicosHabilitados)){
-      try{
+    const objTmp = servicosHabilitados.map(sh => ({ id_servico: sh.idServico, id_atendente: idAtendente, em_execucao: sh.emExecucao }));
+    if (servicosHabilitados && Array.isArray(servicosHabilitados)) {
+      try {
         await connection('servicos_atendentes').where('id_atendente', idAtendente).delete();
-        const response = await connection('servicos_atendentes').insert(objTmp).returning('*');
-        return res.status(204).json({message: 'ok'});
+        await connection('servicos_atendentes').insert(objTmp).returning('*');
+        return res.status(204).json({ message: 'ok' });
       } catch (error) {
         logger.error(`Erro ao atualizar serviços atendidos pelo atendente. ${error.message}`);
         return res.status(500).json({ message: error.message });
@@ -135,7 +125,7 @@ module.exports = {
 
 function getClauseWhere(cpf, nome, email, sexo, dataNascimento, username, password) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (cpf) {
     if (isClause) whereRaw = whereRaw.concat(' and ');

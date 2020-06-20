@@ -3,7 +3,7 @@ exports.up = knex => {
     table.primary(['id_servico', 'id_atendente']);
     table.bigInteger('id_servico').notNullable().references('id').inTable('servicos');
     table.bigInteger('id_atendente').notNullable().references('id').inTable('atendentes');
-    table.boolean("em_execucao").notNullable().default(false);
+    table.boolean('em_execucao').notNullable().default(false);
   });
 };
 

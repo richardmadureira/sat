@@ -20,7 +20,7 @@ module.exports = {
       const result = await connection('grupos_servicos').where('id', id).select('*').first();
       if (result) {
         const { nome, sigla, descricao, ativo } = req.body;
-        let data = {};
+        const data = {};
         if (nome && result.nome !== nome) {
           data.nome = nome;
         }
@@ -30,7 +30,7 @@ module.exports = {
         if (descricao && result.descricao !== descricao) {
           data.descricao = descricao;
         }
-        if (ativo != undefined && result.ativo !== ativo) {
+        if (ativo !== undefined && result.ativo !== ativo) {
           data.ativo = ativo;
         }
         const response = await connection('grupos_servicos').where('id', id).update(data).returning('*');
@@ -92,7 +92,7 @@ module.exports = {
 
 function getClauseWhere(nome, sigla, descricao, ativo) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (nome) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
@@ -112,7 +112,7 @@ function getClauseWhere(nome, sigla, descricao, ativo) {
     args[args.length] = '%' + descricao.trim() + '%';
     isClause = true;
   }
-  if (ativo != undefined) {
+  if (ativo !== undefined) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
     whereRaw = whereRaw.concat('ativo = ?');
     args[args.length] = ativo;

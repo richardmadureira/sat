@@ -20,7 +20,6 @@ export default class ErrorBoundary extends React.Component {
         <div className="alert alert-danger">Algo deu errado...</div>
       );
     }
-
     return this.props.children;
   }
 }

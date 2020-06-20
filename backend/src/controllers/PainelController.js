@@ -5,17 +5,17 @@ module.exports = {
   async create(req, res) {
     logger.debug('Iniciando criação de novo painel');
     const { nome, descricao, mensagem, ativo, listaIdsServicos } = req.body;
-    let servicos = [];
+    const servicos = [];
 
     try {
       const response = await connection('paineis').insert({ nome, descricao, mensagem, ativo }).returning('*');
       if (listaIdsServicos && Array.isArray(listaIdsServicos)) {
-        for (let idServico of listaIdsServicos) {
+        for (const idServico of listaIdsServicos) {
           servicos.push({ id_painel: response[0].id, id_servico: idServico });
         }
       }
       const responseServicos = await connection('paineis_servicos').insert(servicos).returning('id_servico');
-      let retorno = response[0];
+      const retorno = response[0];
       retorno.listaIdsServicos = responseServicos;
       return res.json(retorno);
     } catch (error) {
@@ -28,11 +28,11 @@ module.exports = {
     logger.debug(`Iniciando atualização de painel de id ${id}`);
     try {
       const result = await connection('paineis').where('id', id).select('*').first();
-      let servicos = [];
+      const servicos = [];
       if (result) {
         let retorno = result;
         const { nome, descricao, mensagem, ativo, listaIdsServicos } = req.body;
-        let data = {};
+        const data = {};
         if (nome && result.nome !== nome) {
           data.nome = nome;
           retorno.nome = nome;
@@ -45,12 +45,12 @@ module.exports = {
           data.mensagem = mensagem;
           retorno.mensagem = mensagem;
         }
-        if (ativo != undefined && result.ativo !== ativo) {
+        if (ativo !== undefined && result.ativo !== ativo) {
           data.ativo = ativo;
           retorno.ativo = ativo;
         }
         if (listaIdsServicos && Array.isArray(listaIdsServicos)) {
-          for (let idServico of listaIdsServicos) {
+          for (const idServico of listaIdsServicos) {
             servicos.push({ id_painel: id, id_servico: idServico });
           }
         }
@@ -117,7 +117,7 @@ module.exports = {
 
 function getClauseWhere(nome, descricao, mensagem, ativo) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (nome) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
@@ -137,7 +137,7 @@ function getClauseWhere(nome, descricao, mensagem, ativo) {
     args[args.length] = '%' + mensagem.trim() + '%';
     isClause = true;
   }
-  if (ativo != undefined) {
+  if (ativo !== undefined) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
     whereRaw = whereRaw.concat('ativo = ?');
     args[args.length] = ativo;

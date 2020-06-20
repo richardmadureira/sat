@@ -7,9 +7,7 @@ module.exports = {
     const { idGrupoServico } = req.params;
     const { nome, sigla, descricao, ativo } = req.body;
     try {
-      const response = await connection('servicos')
-        .insert({ id_grupo_servico: idGrupoServico, nome, sigla, descricao, ativo })
-        .returning('*');
+      const response = await connection('servicos').insert({ id_grupo_servico: idGrupoServico, nome, sigla, descricao, ativo }).returning('*');
       return res.json(response[0]);
     } catch (error) {
       logger.error(`Erro ao criar novo serviço: ${error.message}`);
@@ -23,7 +21,7 @@ module.exports = {
       const result = await connection('servicos').where('id', id).select('*').first();
       if (result) {
         const { nome, sigla, descricao, ativo, idGrupoServico } = req.body;
-        let data = {};
+        const data = {};
         if (idGrupoServico && result.id_grupo_servico !== idGrupoServico) {
           data.id_grupo_servico = idGrupoServico;
         }
@@ -36,7 +34,7 @@ module.exports = {
         if (descricao && result.descricao !== descricao) {
           data.descricao = descricao;
         }
-        if (ativo != undefined && result.ativo !== ativo) {
+        if (ativo !== undefined && result.ativo !== ativo) {
           data.ativo = ativo;
         }
         const response = await connection('servicos').where('id', id).update(data).returning('*');
@@ -98,7 +96,7 @@ module.exports = {
 
 function getClauseWhere(nome, sigla, descricao, ativo) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (nome) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
@@ -118,7 +116,7 @@ function getClauseWhere(nome, sigla, descricao, ativo) {
     args[args.length] = '%' + descricao.trim() + '%';
     isClause = true;
   }
-  if (ativo != undefined) {
+  if (ativo !== undefined) {
     if (isClause) whereRaw = whereRaw.concat(' and ');
     whereRaw = whereRaw.concat('ativo = ?');
     args[args.length] = ativo;

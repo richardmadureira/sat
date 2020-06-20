@@ -20,7 +20,7 @@ module.exports = {
       const result = await connection('estacoes').where('id', id).select('*').first();
       if (result) {
         const { tipoEstacao, numero } = req.body;
-        let data = {};
+        const data = {};
         if (tipoEstacao && result.tipoEstacao !== tipoEstacao) {
           data.tipoEstacao = tipoEstacao;
         }
@@ -86,7 +86,7 @@ module.exports = {
 
 function getClauseWhere(tipoEstacao, numero) {
   let whereRaw = '';
-  let args = [];
+  const args = [];
   let isClause = false;
   if (tipoEstacao) {
     if (isClause) whereRaw = whereRaw.concat(' and ');

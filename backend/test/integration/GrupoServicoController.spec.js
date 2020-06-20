@@ -15,7 +15,7 @@ describe('Grupos de Serviços', () => {
   });
 
   it('Deve listar Todas os grupos de serviços', async () => {
-    const response = await request(app).get('/grupos-servicos');
+    const response = await request(app).get('/grupos-servicos/pesquisa');
     const arrayEsperado = [
       { id: 1, nome: 'Nome do Grupo de Serviço 1', sigla: 'GS1', descricao: 'Descrição do grupo de serviço 1', ativo: true },
       { id: 2, nome: 'Nome do Grupo de Serviço 2', sigla: 'GS2', descricao: 'Descrição do grupo de serviço 2', ativo: true },
@@ -30,7 +30,7 @@ describe('Grupos de Serviços', () => {
   });
 
   it('Deve listar Todos os grupos de serviço inativos', async () => {
-    const response = await request(app).get('/grupos-servicos').send({ ativo: false });
+    const response = await request(app).get('/grupos-servicos/pesquisa').send({ ativo: false });
     const arrayEsperado = [
       { id: 6, nome: 'Nome do Grupo de Serviço 6', sigla: 'GS6', descricao: 'Descrição do grupo de serviço 6', ativo: false }
     ];
@@ -41,7 +41,7 @@ describe('Grupos de Serviços', () => {
   });
 
   it('Deve listar 2 primeiros grupos de serviços', async () => {
-    const response = await request(app).get('/grupos-servicos?page=1&size=2');
+    const response = await request(app).get('/grupos-servicos/pesquisa?page=1&size=2');
     const arrayEsperado = [
       { id: 1, nome: 'Nome do Grupo de Serviço 1', sigla: 'GS1', descricao: 'Descrição do grupo de serviço 1', ativo: true },
       { id: 2, nome: 'Nome do Grupo de Serviço 2', sigla: 'GS2', descricao: 'Descrição do grupo de serviço 2', ativo: true }

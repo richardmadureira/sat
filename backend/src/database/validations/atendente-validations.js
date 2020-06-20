@@ -69,10 +69,10 @@ function validateFindAll() {
 }
 
 function validateServicos() {
-  const servicoHabilitado =  Joi.object().keys({
+  const servicoHabilitado = Joi.object().keys({
     idServico: Joi.number().positive().min(1),
     emExecucao: Joi.boolean().required()
-  })
+  });
   return celebrate({
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().min(1)
