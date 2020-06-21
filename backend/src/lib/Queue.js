@@ -1,6 +1,5 @@
 const Queue = require('bull');
 const config = require('../config');
-const registrationMail = require('../jobs/registration-mail');
 const jobs = require('../jobs');
 
 const queues = Object.values(jobs).map(job => ({
