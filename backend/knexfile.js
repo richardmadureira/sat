@@ -6,9 +6,9 @@ module.exports = {
     connection: {
       host: 'localhost',
       port: 5432,
-      database: 'sat-db',
-      user: 'sat',
-      password: 'sat00'
+      database: 'postgres',
+      user: 'postgres',
+      password: 'postgres'
     },
     migrations: {
       directory: './src/database/migrations'
