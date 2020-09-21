@@ -7,3 +7,5 @@ backend/logs
 backend/**/*.sqlite3
 backend/tmp/**
 logs
+
+docker/volumes

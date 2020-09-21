@@ -3,7 +3,6 @@ import { Route, Link, Routes } from 'react-router-dom';
 import GrupoServicoDetalhe from '../grupos-servicos/grupo-servico-detalhe';
 import GrupoServicoLista from '../grupos-servicos/grupo-servico-lista';
 
-
 function App() {
   return (
     <>
