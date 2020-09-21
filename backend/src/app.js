@@ -7,6 +7,8 @@ const { errors } = require('celebrate');
 const routes = require('./routes');
 const logErrors = require('./middlewares/logErrors');
 
+let listaClientesSocket = [];
+
 const app = express();
 // app.use(function(req,res,next){setTimeout(next,1000)}); //para simular delay para ver o loading (apenas para testes)...
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -19,4 +21,15 @@ app.use(routes);
 app.use(errors());
 app.use(logErrors);
 
-module.exports = app;
+app.set('totalGruposServicos', 0);
+
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+io.on('connection', socket => {
+    listaClientesSocket.push(socket);
+    socket.emit('message', 'Hello World')
+    app.set('listaClientesSocket', listaClientesSocket);
+});
+app.set('socketServer', io);
+
+module.exports = http;

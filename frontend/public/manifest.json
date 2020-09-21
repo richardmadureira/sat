@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SAT",
+  "name": "Sistema de Atendimentos",
   "icons": [
     {
       "src": "favicon.ico",

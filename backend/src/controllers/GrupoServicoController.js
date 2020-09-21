@@ -56,7 +56,13 @@ module.exports = {
       return res.status(500).json({ message: error.message });
     }
   },
+  
   async findById(req, res) {
+    let total = req.app.get('totalGruposServicos');
+    if(!total) total = 0;
+    console.log("TOOOTAL" + total++)
+    req.app.set('totalGruposServicos', total);
+    req.app.get('socketServer').emit('dashboard', {totalGruposServicos: total});
     const { id } = req.params;
     logger.debug(`Pesquisando grupo de serviço pelo id ${id}`);
     try {
