@@ -1,5 +1,15 @@
-import { selector, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import api from '../api';
+
+export const drawerOpenState = atom({
+    key: 'drawer-open',
+    default: false
+});
+
+export const selectedMenuIndexState = atom({
+    key: 'selected-menu-index',
+    default: -1
+});
 
 export const grupoServicoState = selectorFamily({
     key: 'grupo-servico',

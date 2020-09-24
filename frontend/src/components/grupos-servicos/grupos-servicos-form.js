@@ -6,7 +6,7 @@ import { Grid, Paper, TextField } from '@material-ui/core';
 import useStyles from '../App/styles';
 import Title from '../Title';
 
-function GrupoServicoDetalhe() {
+function GrupoServicoForm() {
     const classes = useStyles();
     const { id } = useParams('id');
     const grupoServicoLoadable = useRecoilValueLoadable(grupoServicoState(id));
@@ -17,7 +17,7 @@ function GrupoServicoDetalhe() {
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <Title>Detalhe do Grupo de Serviço</Title>
+                            <Title>Grupo de Serviço</Title>
                             <Grid container spacing={1}>
                                 <Grid item xs={12} sm={6} xl={6}>
                                     <TextField id="standard-basic" label="Nome" value={grupoServico.nome} disabled aria-readonly fullWidth />
